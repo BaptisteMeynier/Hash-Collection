@@ -3,7 +3,7 @@ package com.java.optim.hashcode.collection;
 import java.util.Date;
 import java.util.List;
 
-public class BeanWithHash {
+public class BeanWithHash{
 
 
 	private int price;//immutable
