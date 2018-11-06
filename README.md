@@ -15,33 +15,33 @@ Ainsi si le calcul de la valeur du hashcode est complexe ou pour améliorer les 
 ____
 Résultat de l'execution sur mon poste
 
-shouldBeSlowWithBeanWithoutHash
-HashTable temps d'insertion  = 91 ms
-HashTable temps de recherche = 8646 nano secondes
-I do not find the result
-
-shouldBeSlowWithBeanWithSameHash
-HashTable temps d'insertion  = 40531
-HashTable temps de recherche = 3553468 nano secondes
-I find the result
-
-shouldFindValueWithBeanWithHash
-HashTable temps d'insertion  = 34 ms
-HashTable temps de recherche = 24027 nano secondes
-I find the result
-
-shouldBeFasterThanClassicHashImplWithBeanWithHashImmutable
-HashTable temps d'insertion  = 61 ms
-HashTable temps de recherche = 39701 nano secondes
-I find the result
-
-shouldBeSlowToSearchValueWhichBeChangedWithHash
-HashTable temps de recherche = 26959 nano secondes
-HashTable temps de recherche une fois mutée = 34681 nano secondes
-I find the result
-
-beanWithPersonalizedHashImmutableShouldBeQuickerThanClassicImpl
-HashTable temps de recherche pour BeanWithHash  = 41923 ms
-HashTable temps de recherche pour BeanWithPersonalizedHashImmutable  = 34863 ms
+shouldBeSlowWithBeanWithoutHash  
+HashTable temps d'insertion  = 91 ms  
+HashTable temps de recherche = 8646 nano secondes  
+I do not find the result  
+  
+shouldBeSlowWithBeanWithSameHash  
+HashTable temps d'insertion  = 40531  
+HashTable temps de recherche = 3553468 nano secondes  
+I find the result  
+  
+shouldFindValueWithBeanWithHash  
+HashTable temps d'insertion  = 34 ms  
+HashTable temps de recherche = 24027 nano secondes  
+I find the result  
+  
+shouldBeFasterThanClassicHashImplWithBeanWithHashImmutable  
+HashTable temps d'insertion  = 61 ms  
+HashTable temps de recherche = 39701 nano secondes  
+I find the result  
+  
+shouldBeSlowToSearchValueWhichBeChangedWithHash  
+HashTable temps de recherche = 26959 nano secondes  
+HashTable temps de recherche une fois mutée = 34681 nano secondes  
+I find the result  
+  
+beanWithPersonalizedHashImmutableShouldBeQuickerThanClassicImpl  
+HashTable temps de recherche pour BeanWithHash  = 41923 ms  
+HashTable temps de recherche pour BeanWithPersonalizedHashImmutable  = 34863 ms  
 
 
