@@ -183,8 +183,8 @@ public class HashCodeTest {
 	}
 	
 	@Test
-	public void beanWithPersonalizedHashImmutableShouldBeQuickerThanClassicImpl() {
-		System.out.println("beanWithPersonalizedHashImmutableShouldBeQuickerThanClassicImpl");
+	public void shouldBeQuickerWithPersonalizeHashThanClassicImpl() {
+		System.out.println("shouldBeQuickerWithPersonalizeHashThanClassicImpl");
 		int iterationComparatifTest = iteration*2;
 		Map<BeanWithHash,String> hashTable = new Hashtable<BeanWithHash,String>();
 		BeanWithHash bean = null;
