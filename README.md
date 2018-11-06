@@ -21,7 +21,7 @@ HashTable temps de recherche = 8646 nano secondes
 I do not find the result  
   
 shouldBeSlowWithBeanWithSameHashValue  
-HashTable temps d'insertion  = 40531  
+HashTable temps d'insertion  = 40531 ms 
 HashTable temps de recherche = 3553468 nano secondes  
 I find the result  
   
