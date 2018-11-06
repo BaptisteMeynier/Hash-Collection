@@ -6,11 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -81,19 +78,19 @@ public class HashCodeTest {
 	@DisplayName("Should find bean when hashCode method is defined but slow because the hashcode method return always the same value and the repartition is bad")
 	public void shouldBeSlowWithBeanWithBadHash() {
 		System.out.println("shouldBeSlowWithBeanWithBadHash");
-		Map<BeanWithBadHash,String> hashTable = new Hashtable<BeanWithBadHash,String>();
-		BeanWithBadHash bean = null;
+		Map<BeanWithSameHashValue,String> hashTable = new Hashtable<BeanWithSameHashValue,String>();
+		BeanWithSameHashValue bean = null;
 		long debut = System.nanoTime();
 		Date now = new Date();
 		List<String> owner =Arrays.asList("Martin","Paul");
 		for (int i = 0; i < iteration; i++) {
-			bean = new BeanWithBadHash(i,true,"aName"+i,now,owner);
+			bean = new BeanWithSameHashValue(i,true,"aName"+i,now,owner);
 			hashTable.put(bean,bean.toString());
 		}
 		long fin = System.nanoTime();
-		System.out.println("HashTable temps d'insertion  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(fin - debut)));
+		System.out.println("HashTable temps d'insertion  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(fin - debut)) + " ms");
 		debut = System.nanoTime();
-		bean = new BeanWithBadHash(3504,true,"aName3504",now,owner);
+		bean = new BeanWithSameHashValue(3504,true,"aName3504",now,owner);
 		String res = null;
 		if (hashTable.containsKey(bean)) {
 			res=hashTable.get(bean);
@@ -108,9 +105,8 @@ public class HashCodeTest {
 	
 	
 	@Test
-	@DisplayName("Should be faster than the classic implementation of hash with BeanWithHashImmutable")
-	public void shouldBeFasterThanClassicHashImplWithBeanWithHashImmutable() {
-		System.out.println("shouldBeFasterThanClassicHashImplWithBeanWithHashImmutable");
+	public void shouldBeSlowThanClassicHashWithBeanWithHashImmutable() {
+		System.out.println("shouldBeSlowThanClassicHashWithBeanWithHashImmutable");
 		Map<BeanWithHashImmutable,String> hashTable = new Hashtable<BeanWithHashImmutable,String>();
 		BeanWithHashImmutable bean = null;
 		long debut = System.nanoTime();
@@ -129,7 +125,7 @@ public class HashCodeTest {
 			res=hashTable.get(bean);
 		}
 		fin = System.nanoTime();
-		System.out.println("HashTable temps de recherche = "+ Math.abs(fin - debut) + " nano seconde");
+		System.out.println("HashTable temps de recherche = "+ Math.abs(fin - debut) + " nano secondes");
 
 		System.out.println(Objects.nonNull(res) ? "I find the result":"I do not find the result");
 

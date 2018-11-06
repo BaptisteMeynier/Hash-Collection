@@ -3,7 +3,7 @@ package com.java.optim.hashcode.collection;
 import java.util.Date;
 import java.util.List;
 
-public class BeanWithBadHash{
+public class BeanWithSameHashValue{
 
 
 	private int price;//immutable
@@ -12,10 +12,10 @@ public class BeanWithBadHash{
 	private Date creation;//mutable
 	private List<String> owner;//mutable
 
-	public BeanWithBadHash() {}
+	public BeanWithSameHashValue() {}
 
 
-	public BeanWithBadHash(int price, boolean available, String name, Date creation, List<String> owner) {
+	public BeanWithSameHashValue(int price, boolean available, String name, Date creation, List<String> owner) {
 		super();
 		this.price = price;
 		this.available = available;
@@ -73,7 +73,7 @@ public class BeanWithBadHash{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BeanWithBadHash other = (BeanWithBadHash) obj;
+		BeanWithSameHashValue other = (BeanWithSameHashValue) obj;
 		if (available != other.available)
 			return false;
 		if (creation == null) {
