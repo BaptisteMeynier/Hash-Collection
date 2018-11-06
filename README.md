@@ -30,17 +30,17 @@ HashTable temps d'insertion  = 34 ms
 HashTable temps de recherche = 24027 nano secondes  
 I find the result  
   
-shouldBeFasterThanClassicHashImplWithBeanWithHashImmutable  
+shouldBeSlowThanClassicHashWithBeanWithHashImmutable  
 HashTable temps d'insertion  = 61 ms  
 HashTable temps de recherche = 39701 nano secondes  
 I find the result  
   
-shouldBeSlowToSearchValueWhichBeChangedWithHash  
+shouldBeSlowToSearchWhenKeyValueIsChanged  
 HashTable temps de recherche = 26959 nano secondes  
 HashTable temps de recherche une fois mutée = 34681 nano secondes  
 I find the result  
   
-beanWithPersonalizedHashImmutableShouldBeQuickerThanClassicImpl  
+shouldBeQuickerWithPersonalizeHashThanClassicImpl  
 HashTable temps de recherche pour BeanWithHash  = 41923 ms  
 HashTable temps de recherche pour BeanWithPersonalizedHashImmutable  = 34863 ms  
 
