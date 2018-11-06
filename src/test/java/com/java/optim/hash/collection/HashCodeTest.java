@@ -82,8 +82,8 @@ public class HashCodeTest {
 	
 	@Test
 	@DisplayName("Should find bean when hashCode method is defined but slow because the hashcode method return always the same value and the repartition is bad")
-	public void shouldBeSlowWithBeanWithBadHash() {
-		System.out.println("shouldBeSlowWithBeanWithBadHash");
+	public void shouldBeSlowWithBeanWithSameHashValue() {
+		System.out.println("shouldBeSlowWithBeanWithSameHashValue");
 		Map<BeanWithSameHashValue,String> hashTable = new Hashtable<BeanWithSameHashValue,String>();
 		BeanWithSameHashValue bean = null;
 		long debut = System.nanoTime();
@@ -102,7 +102,7 @@ public class HashCodeTest {
 			res=hashTable.get(bean);
 		}
 		fin = System.nanoTime();
-		System.out.println("HashTable temps de recherche = "+ Math.abs(fin - debut) +"nano secondes");
+		System.out.println("HashTable temps de recherche = "+ Math.abs(fin - debut) +" nano secondes");
 
 		System.out.println(Objects.nonNull(res) ? "I find the result":"I do not find the result");
 
