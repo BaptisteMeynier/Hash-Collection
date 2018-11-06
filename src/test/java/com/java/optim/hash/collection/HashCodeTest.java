@@ -1,4 +1,4 @@
-package com.java.optim.hashcode.collection;
+package com.java.optim.hash.collection;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -15,6 +15,12 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.java.optim.hashcode.collection.BeanWithHash;
+import com.java.optim.hashcode.collection.BeanWithHashImmutable;
+import com.java.optim.hashcode.collection.BeanWithPersonalizedHashImmutable;
+import com.java.optim.hashcode.collection.BeanWithSameHashValue;
+import com.java.optim.hashcode.collection.BeanWithoutHash;
 
 public class HashCodeTest {
 
@@ -133,8 +139,8 @@ public class HashCodeTest {
 	}
 	
 	@Test
-	public void shouldBeSlowToSearchValueWhichBeChangedWithHash() {
-		System.out.println("shouldBeSlowToSearchValueWhichBeChangedWithHash");
+	public void shouldBeSlowToSearchWhenKeyValueIsChanged() {
+		System.out.println("shouldBeSlowToSearchWhenKeyValueIsChanged");
 		Map<BeanWithHash,String> hashTable = new Hashtable<BeanWithHash,String>();
 		BeanWithHash bean = null;
 		long debut = System.nanoTime();

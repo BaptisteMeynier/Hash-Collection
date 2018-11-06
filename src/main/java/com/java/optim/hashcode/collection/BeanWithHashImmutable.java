@@ -6,11 +6,11 @@ import java.util.List;
 
 public final class BeanWithHashImmutable {
 
-	private final int price;//immutable
-	private final boolean available;//immutable
-	private final String name;//immutable
-	private final Date creation;//mutable
-	private final List<String> owner;//mutable
+	private final int price;
+	private final boolean available;
+	private final String name;
+	private final Date creation;
+	private final List<String> owner;
 	
 	public BeanWithHashImmutable(int price, boolean available, String name, Date creation, List<String> owner) {
 		super();

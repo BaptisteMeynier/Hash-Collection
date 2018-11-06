@@ -5,11 +5,11 @@ import java.util.List;
 
 public class BeanWithoutHash {
 
-	private int price;//immutable
-	private boolean available;//immutable
-	private String name;//immutable
-	private Date creation;//mutable
-	private List<String> owner;//mutable
+	private int price;
+	private boolean available;
+	private String name;
+	private Date creation;
+	private List<String> owner;
 	
 	public BeanWithoutHash() {}
 	
