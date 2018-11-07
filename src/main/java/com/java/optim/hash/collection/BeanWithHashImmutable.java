@@ -1,10 +1,10 @@
-package com.java.optim.hashcode.collection;
+package com.java.optim.hash.collection;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public final class BeanWithPersonalizedHashImmutable {
+public final class BeanWithHashImmutable {
 
 	private final int price;
 	private final boolean available;
@@ -12,19 +12,13 @@ public final class BeanWithPersonalizedHashImmutable {
 	private final Date creation;
 	private final List<String> owner;
 	
-
-	public BeanWithPersonalizedHashImmutable(int price, boolean available, String name, Date creation,
-			List<String> owner) {
+	public BeanWithHashImmutable(int price, boolean available, String name, Date creation, List<String> owner) {
 		super();
 		this.price = price;
 		this.available = available;
 		this.name = name;
 		this.creation = creation;
 		this.owner = owner;
-	}
-
-	public boolean isAvailable() {
-		return available;
 	}
 
 	public int getPrice() {
@@ -46,6 +40,10 @@ public final class BeanWithPersonalizedHashImmutable {
 		return Collections.unmodifiableList(owner);
 	}
 
+	public boolean isAvailable() {
+		return available;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,7 +52,7 @@ public final class BeanWithPersonalizedHashImmutable {
 		result = prime * result + ((creation == null) ? 0 : creation.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + price;
+		result = prime * result + (int) (price ^ (price >>> 32));
 		return result;
 	}
 
@@ -66,7 +64,7 @@ public final class BeanWithPersonalizedHashImmutable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BeanWithPersonalizedHashImmutable other = (BeanWithPersonalizedHashImmutable) obj;
+		BeanWithHashImmutable other = (BeanWithHashImmutable) obj;
 		if (available != other.available)
 			return false;
 		if (creation == null) {
@@ -88,5 +86,9 @@ public final class BeanWithPersonalizedHashImmutable {
 			return false;
 		return true;
 	}
+
+	
+	
+	
 	
 }

@@ -1,9 +1,9 @@
-package com.java.optim.hashcode.collection;
+package com.java.optim.hash.collection;
 
 import java.util.Date;
 import java.util.List;
 
-public class BeanWithHash{
+public class BeanWithSameHashValue{
 
 
 	private int price;
@@ -11,11 +11,11 @@ public class BeanWithHash{
 	private String name;
 	private Date creation;
 	private List<String> owner;
-	
-	public BeanWithHash() {}
-	
 
-	public BeanWithHash(int price, boolean available, String name, Date creation, List<String> owner) {
+	public BeanWithSameHashValue() {}
+
+
+	public BeanWithSameHashValue(int price, boolean available, String name, Date creation, List<String> owner) {
 		super();
 		this.price = price;
 		this.available = available;
@@ -23,8 +23,8 @@ public class BeanWithHash{
 		this.creation = creation;
 		this.owner = owner;
 	}
-	
-	
+
+
 
 	public int getPrice() {
 		return price;
@@ -61,14 +61,7 @@ public class BeanWithHash{
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (available ? 1231 : 1237);
-		result = prime * result + ((creation == null) ? 0 : creation.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + price;
-		return result;
+		return 2;
 	}
 
 
@@ -80,7 +73,7 @@ public class BeanWithHash{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BeanWithHash other = (BeanWithHash) obj;
+		BeanWithSameHashValue other = (BeanWithSameHashValue) obj;
 		if (available != other.available)
 			return false;
 		if (creation == null) {
@@ -102,5 +95,5 @@ public class BeanWithHash{
 			return false;
 		return true;
 	}
-	
+
 }

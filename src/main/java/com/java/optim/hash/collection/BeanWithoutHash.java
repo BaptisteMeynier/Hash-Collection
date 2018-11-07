@@ -1,4 +1,4 @@
-package com.java.optim.hashcode.collection;
+package com.java.optim.hash.collection;
 
 import java.util.Date;
 import java.util.List;

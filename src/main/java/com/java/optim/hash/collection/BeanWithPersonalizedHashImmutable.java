@@ -1,10 +1,10 @@
-package com.java.optim.hashcode.collection;
+package com.java.optim.hash.collection;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public final class BeanWithHashImmutable {
+public final class BeanWithPersonalizedHashImmutable {
 
 	private final int price;
 	private final boolean available;
@@ -12,13 +12,19 @@ public final class BeanWithHashImmutable {
 	private final Date creation;
 	private final List<String> owner;
 	
-	public BeanWithHashImmutable(int price, boolean available, String name, Date creation, List<String> owner) {
+
+	public BeanWithPersonalizedHashImmutable(int price, boolean available, String name, Date creation,
+			List<String> owner) {
 		super();
 		this.price = price;
 		this.available = available;
 		this.name = name;
 		this.creation = creation;
 		this.owner = owner;
+	}
+
+	public boolean isAvailable() {
+		return available;
 	}
 
 	public int getPrice() {
@@ -40,10 +46,6 @@ public final class BeanWithHashImmutable {
 		return Collections.unmodifiableList(owner);
 	}
 
-	public boolean isAvailable() {
-		return available;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -52,7 +54,7 @@ public final class BeanWithHashImmutable {
 		result = prime * result + ((creation == null) ? 0 : creation.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + (int) (price ^ (price >>> 32));
+		result = prime * result + price; // <==== here
 		return result;
 	}
 
@@ -64,7 +66,7 @@ public final class BeanWithHashImmutable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BeanWithHashImmutable other = (BeanWithHashImmutable) obj;
+		BeanWithPersonalizedHashImmutable other = (BeanWithPersonalizedHashImmutable) obj;
 		if (available != other.available)
 			return false;
 		if (creation == null) {
@@ -86,9 +88,5 @@ public final class BeanWithHashImmutable {
 			return false;
 		return true;
 	}
-
-	
-	
-	
 	
 }
