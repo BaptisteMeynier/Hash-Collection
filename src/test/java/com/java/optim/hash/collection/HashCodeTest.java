@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 public class HashCodeTest {
 
     private int iteration = 500000;
- 	private int insertionRank= 2356;
+ 	private int insertionRank= 235645;
     
     private List<String> owner = Arrays.asList("Martin", "Paul");
 

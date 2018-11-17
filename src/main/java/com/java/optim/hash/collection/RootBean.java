@@ -3,6 +3,7 @@ package com.java.optim.hash.collection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class RootBean implements Cloneable {
 
@@ -51,7 +52,6 @@ public class RootBean implements Cloneable {
 		copy.setCreation(new Date(this.creation.getTime()));
 		copy.setOwner(new ArrayList(this.owner));
 		return copy;
-	}
-
+	}	
 	
 }

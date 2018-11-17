@@ -16,63 +16,64 @@ ____
 Résultat de l'execution sur mon poste  
 ______________________________________
 testWithBeanWithHash  
-HashTable insertion duration  = 381 ms  
-HashTable seek duration  = 22193 ns  
+HashTable insertion duration  = 1737 ms  
+HashTable seek duration  = 35760 ns  
 Value is found  
 ______________________________________
 testWithEclipseHashCodeImpl  
-HashTable insertion duration  = 640 ms  
-HashTable seek duration  = 31993 ns  
+HashTable insertion duration  = 1188 ms  
+HashTable seek duration  = 40447 ns  
 Value is found  
 ______________________________________
 searchReferenceForBeanWithoutHash  
-HashTable insertion duration  = 301 ms  
-HashTable seek duration  = 17913 ns  
+HashTable insertion duration  = 578 ms  
+HashTable seek duration  = 17117 ns  
 Value is found  
 ______________________________________
 beCarefullWhenYouReimplementHashCodeMethod  
 Classical Implement with prime number  
-HashTable insertion duration  = 342 ms  
-HashTable seek duration  = 25658 ns  
+HashTable insertion duration  = 524 ms  
+HashTable seek duration  = 22118 ns  
 Value is found  
 Personalize Implement  
-HashTable insertion duration  = 988 ms  
-HashTable seek duration  = 22555 ns  
+HashTable insertion duration  = 610 ms  
+HashTable seek duration  = 28541 ns  
 Value is found  
 ______________________________________
 testWithBeanWithSameHashValue  
 Should be slow because hashcode method return always the same value and the repartition is bad  
-HashTable insertion duration  = 239 ms  
-HashTable seek duration  = 5575 ns  
+HashTable insertion duration  = 484 ms  
+HashTable seek duration  = 4488 ns  
 Value is found  
 ______________________________________
 changeValueForBeanWithHash  
-HashTable insertion duration  = 267 ms  
-HashTable seek duration  = 14551 ns  
+HashTable insertion duration  = 999 ms  
+HashTable seek duration  = 13735 ns  
 Value not found  
 ______________________________________
 testWithIntelliJHashCodeImpl  
-HashTable insertion duration  = 316 ms  
-HashTable seek duration  = 26289 ns  
+HashTable insertion duration  = 398 ms  
+HashTable seek duration  = 24595 ns  
 Value is found  
 ______________________________________
 testBeanWithHashImmutable  
-HashTable insertion duration  = 236 ms  
-HashTable seek duration  = 24506 ns  
+HashTable insertion duration  = 410 ms  
+HashTable seek duration  = 27089 ns  
 Value is found  
 ______________________________________
 testWithJava8HashCodeImpl  
-HashTable insertion duration  = 297 ms  
-HashTable seek duration  = 15159 ns  
+HashTable insertion duration  = 756 ms  
+HashTable seek duration  = 17158 ns  
 Value is found  
 ______________________________________
 testCachingHashCode  
-HashTable insertion duration  = 246 ms  
-HashTable seek duration  = 4101 ns  
+HashTable insertion duration  = 325 ms  
+HashTable seek duration  = 4507 ns  
 Value is found  
 ______________________________________
 searchBeanWithDifferentReferenceForBeanWithoutHash  
-HashTable insertion duration  = 271 ms  
-HashTable seek duration  = 1575 ns  
+HashTable insertion duration  = 705 ms  
+HashTable seek duration  = 1354 ns  
 Value not found  
+
 
