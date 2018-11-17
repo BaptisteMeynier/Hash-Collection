@@ -102,13 +102,45 @@ public class HashCodeTest {
     }
 
     @Test
-    @Disabled
+    public void testWithEclipseHashCodeImpl() {
+      System.out.println("testWithEclipseHashCodeImpl");
+        Map<BeanWithEclipseHash, String> hashTable = new Hashtable<>();
+        BeanWithEclipseHash bean = new BeanWithEclipseHash(154064, true, "aName53144", new Date(), owner);
+
+        boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+    	assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
+    	isPresentPrint(isPresent);
+    }
+    
+    @Test
+    public void testWithIntelliJHashCodeImpl() {
+      System.out.println("testWithIntelliJHashCodeImpl");
+        Map<BeanWithIntelliJHash, String> hashTable = new Hashtable<>();
+        BeanWithIntelliJHash bean = new BeanWithIntelliJHash(154064, true, "aName53144", new Date(), owner);
+
+        boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+    	assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
+    	isPresentPrint(isPresent);
+    }
+    
+    @Test
+    public void testWithJava8HashCodeImpl() {
+      System.out.println("testWithJava8HashCodeImpl");
+        Map<BeanWithJava8Hash, String> hashTable = new Hashtable<>();
+        BeanWithJava8Hash bean = new BeanWithJava8Hash(154064, true, "aName53144", new Date(), owner);
+
+        boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+    	assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
+    	isPresentPrint(isPresent);
+    }
+    
+    @Test
     public void changeValueForBeanWithHash() {
     	System.out.println("changeValueForBeanWithHash");
         Map<BeanWithHash, String> hashTable = new Hashtable<>();
         BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
-        boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+        boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,true);
     	assertFalse(isPresent,"Hash does not manage to find entry because fields had been change and hash does not match anymore");
     	isPresentPrint(isPresent);
     }
@@ -143,6 +175,7 @@ public class HashCodeTest {
     @Test
     public void beCarefullWhenYouReimplementHashCodeMethod() {
     	System.out.println("beCarefullWhenYouReimplementHashCodeMethod");
+    	System.out.println("Classical Implement with prime number");
     	 Map<BeanWithHash, String> hashTable = new Hashtable<>();
          BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
@@ -150,6 +183,7 @@ public class HashCodeTest {
      	assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
      	isPresentPrint(isPresent);
      	
+     	System.out.println("Personalize Implement");
      	Map<BeanWithPersonalizedHash, String> dangerousHashTable = new Hashtable<>();
      	BeanWithPersonalizedHash anOtherbean = new BeanWithPersonalizedHash(154064, true, "aName53144", new Date(), owner);
 
