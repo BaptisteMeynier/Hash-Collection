@@ -5,23 +5,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class BeanWithCachingHashCode {
+public class BeanImmutableWithCachingHashCode extends RootBean{
 
-	private final int price;
-	private final boolean available;
-	private final String name;
-	private final Date creation;
-	private final List<String> owner;
-	private volatile int cachingHashCode =1;
+	private int cachingHashCode;
 
-	public BeanWithCachingHashCode(int price, boolean available, String name, Date creation,
-											 List<String> owner) {
+	public BeanImmutableWithCachingHashCode(int price, boolean available, String name, Date creation,
+			List<String> owner) {
 		super();
 		this.price = price;
 		this.available = available;
 		this.name = name;
 		this.creation = creation;
 		this.owner = owner;
+		cachingHashCode=initialisationHashCode();
 	}
 
 	public boolean isAvailable() {
@@ -47,26 +43,28 @@ public class BeanWithCachingHashCode {
 		return Collections.unmodifiableList(owner);
 	}
 
+
+	private int initialisationHashCode() {
+		int result = 1;
+		final int prime = 31;
+		result = prime * result + (available ? 1231 : 1237);
+		result = prime * result + ((creation == null) ? 0 : creation.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
+		result = prime * result + price;
+		return result;
+	}
+
 	@Override
 	public int hashCode() {
-		int result = cachingHashCode;
-		if(cachingHashCode == 1) {
-			final int prime = 31;
-			result = prime * result + (available ? 1231 : 1237);
-			result = prime * result + ((creation == null) ? 0 : creation.hashCode());
-			result = prime * result + ((name == null) ? 0 : name.hashCode());
-			result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-			result = prime * result + price;
-			cachingHashCode = result;
-		}
-		return result;
+		return cachingHashCode;
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		BeanWithCachingHashCode that = (BeanWithCachingHashCode) o;
+		BeanImmutableWithCachingHashCode that = (BeanImmutableWithCachingHashCode) o;
 		return price == that.price &&
 				available == that.available &&
 				cachingHashCode == that.cachingHashCode &&

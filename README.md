@@ -15,38 +15,43 @@ Ainsi si le calcul de la valeur du hashcode est complexe ou pour améliorer les 
 ____
 Résultat de l'execution sur mon poste
 
-testWithBeanWithoutHash  
-HashTable temps d'insertion  = 57 ms  
-HashTable temps de recherche = 16410 nano secondes  
-I find the result  
-
+______________________________________
 testWithBeanWithHash  
-HashTable temps d'insertion  = 90 ms  
-HashTable temps de recherche = 24205 nanoSecondes  
-I find the result  
-
+HashTable insertion duration  = 409 ms  
+HashTable seek duration  = 44541 ns  
+Value is found  
+______________________________________
+searchReferenceForBeanWithoutHash  
+HashTable insertion duration  = 677 ms  
+HashTable seek duration  = 16334 ns  
+Value is found  
+______________________________________
+beCarefullWhenYouReimplementHashCodeMethod  
+HashTable insertion duration  = 320 ms  
+HashTable seek duration  = 31187 ns  
+Value is found  
+HashTable insertion duration  = 974 ms  
+HashTable seek duration  = 23970 ns  
+Value is found  
+______________________________________
 testWithBeanWithSameHashValue  
 Should be slow because hashcode method return always the same value and the repartition is bad  
-HashTable temps d'insertion  = 56910 ms  
-HashTable temps de recherche = 8752003 nano secondes  
-  
-changeValueForBeanWithHash  
-HashTable temps d'insertion  = 28 ms  
-HashTable temps de recherche = 7795 nano secondes  
-HashTable temps de recherche une fois mutée = 77128 nano secondes  
-Does not find the result  
-
+HashTable insertion duration  = 415 ms  
+HashTable seek duration  = 4021 ns  
+Value is found  
+______________________________________
 testBeanWithHashImmutable  
-HashTable temps d'insertion  = 51 ms  
-HashTable temps de recherche = 2462 nano secondes  
-I do not find the result  
-
-shouldBeQuickerWithPersonalizeHashThanClassicImpl  
-HashTable temps de recherche pour BeanWithHash  = 41436 ms  
-HashTable temps de recherche pour BeanWithPersonalizedHashImmutable  = 112411 ms  
-
+HashTable insertion duration  = 246 ms  
+HashTable seek duration  = 19176 ns  
+Value is found  
+______________________________________
 testCachingHashCode  
-HashTable temps d'insertion  = 37 ms  
-HashTable temps de recherche = 54974 nano secondes  
-I find the result  
+HashTable insertion duration  = 308 ms  
+HashTable seek duration  = 4429 ns  
+Value is found  
+______________________________________
+searchBeanWithDifferentReferenceForBeanWithoutHash  
+HashTable insertion duration  = 238 ms  
+HashTable seek duration  = 1385 ns  
+Value not found  
 

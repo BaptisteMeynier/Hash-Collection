@@ -3,13 +3,7 @@ package com.java.optim.hash.collection;
 import java.util.Date;
 import java.util.List;
 
-public class BeanWithoutHash {
-
-	private int price;
-	private boolean available;
-	private String name;
-	private Date creation;
-	private List<String> owner;
+public class BeanWithoutHash extends RootBean{
 	
 	public BeanWithoutHash() {}
 	

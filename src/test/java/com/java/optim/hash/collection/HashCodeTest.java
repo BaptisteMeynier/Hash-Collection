@@ -14,240 +14,163 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import com.java.optim.hash.collection.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class HashCodeTest {
 
-    private int iteration = 50000;
-
+    private int iteration = 500000;
+ 	private int insertionRank= 2356;
+    
     private List<String> owner = Arrays.asList("Martin", "Paul");
 
-    @Test
-    public void testWithBeanWithoutHash() {
-        System.out.println("testWithBeanWithoutHash");
-
-        Map<BeanWithoutHash, String> hashTable = new Hashtable<>();
-        BeanWithoutHash beanToSearch = new BeanWithoutHash(154064, true, "aName53144", new Date(), owner);
-        BeanWithoutHash bean;
-
-        //INSERTION
-        long debut = System.nanoTime();
-        for (int i = 0; i < iteration; i++) {
-            if (i == 2365) {
-                bean = beanToSearch;
-            } else {
-                bean = new BeanWithoutHash(i, true, "aName" + i, new Date(), owner);
-            }
-            hashTable.put(bean, bean.toString());
-        }
-        long fin = System.nanoTime();
-        System.out.println("HashTable temps d'insertion  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(fin - debut)) + " ms");
-
-
-        //SEARCH
-        debut = System.nanoTime();
-        boolean isPresent = hashTable.containsKey(beanToSearch);
-        fin = System.nanoTime();
-
-        System.out.println("HashTable temps de recherche = " + Math.abs(fin - debut) + " nano secondes");
-        System.out.println(isPresent ? "I find the result" : "I do not find the result");
+    @BeforeEach
+    public void separation() {
+    	System.out.println("______________________________________");
     }
+    
+    public <T extends RootBean> boolean executeTest(final Map<T,String> hashMap, T keyToFind, int totalIteration, int insertionRank, boolean mutationActivated) {
+   
+        long begin = System.nanoTime();
+        T bean;
+        for (int i = 0; i < totalIteration; i++) {
+            if (i == insertionRank) {
+                bean = keyToFind;
+            } else {
+            	bean = (T)keyToFind.clone();
+                bean.setPrice(i);
+                bean.setName("aName"+i);
+            }
+            hashMap.put(bean, bean.toString());
+        }
+        long end = System.nanoTime();
+        System.out.println("HashTable insertion duration  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(end - begin)) + " ms");
+
+        if(mutationActivated) {
+        	keyToFind.setCreation(new Date());
+        	keyToFind.setName("anOtherName");
+        	keyToFind.setPrice(-459);
+        }
+        
+        //SEARCH
+        begin = System.nanoTime();
+        boolean isPresent = hashMap.containsKey(keyToFind);
+        if(isPresent) {
+        hashMap.get(keyToFind);
+        }
+        end = System.nanoTime();
+        System.out.println("HashTable seek duration  = " + Math.abs(end - begin) + " ns");
+        return isPresent;
+    }
+    
+    @Test
+    public void searchReferenceForBeanWithoutHash() {
+    	System.out.println("searchReferenceForBeanWithoutHash");
+    	Map<BeanWithoutHash, String> hashTable = new Hashtable<>();
+    	BeanWithoutHash bean = new BeanWithoutHash(154064, true, "aName53144", new Date(), owner);
+    	
+    	boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+    	assertTrue(isPresent,"Hash manage to find entry because Object Reference is found");
+    	isPresentPrint(isPresent);
+    }
+    
+    @Test
+    public void searchBeanWithDifferentReferenceForBeanWithoutHash() {
+    	System.out.println("searchBeanWithDifferentReferenceForBeanWithoutHash");
+    	Map<BeanWithoutHash, String> hashTable = new Hashtable<>();
+    	int rank =iteration/2;
+    	BeanWithoutHash bean = new BeanWithoutHash(rank, true, "aName"+rank, new Date(), owner);
+    	
+    	boolean isPresent = executeTest(hashTable,bean, iteration,-1,false);
+    	assertFalse(isPresent,"Hash does not manage to find entry because Object Reference is different");
+    	isPresentPrint(isPresent);
+    }
+    
 
     @Test
     public void testWithBeanWithHash() {
-        System.out.println("testWithBeanWithHash");
-
+      System.out.println("testWithBeanWithHash");
         Map<BeanWithHash, String> hashTable = new Hashtable<>();
-        BeanWithHash bean;
+        BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
-        //INSERT
-        long debut = System.nanoTime();
-        Date now = new Date();
-        for (int i = 0; i < iteration; i++) {
-            bean = new BeanWithHash(i, true, "aName" + i, new Date(), owner);
-            hashTable.put(bean, bean.toString());
-        }
-        long fin = System.nanoTime();
-        System.out.println("HashTable temps d'insertion  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(fin - debut)) + " ms");
-
-
-        //SEARCH
-        debut = System.nanoTime();
-        bean = new BeanWithHash(3504, true, "aName3504", now, owner);
-        if (hashTable.containsKey(bean)) {
-            hashTable.get(bean);
-        }
-        fin = System.nanoTime();
-        System.out.println("HashTable temps de recherche = " + Math.abs(fin - debut) + " nanoSecondes");
+        boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+    	assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
+    	isPresentPrint(isPresent);
     }
 
     @Test
+    @Disabled
+    public void changeValueForBeanWithHash() {
+    	System.out.println("changeValueForBeanWithHash");
+        Map<BeanWithHash, String> hashTable = new Hashtable<>();
+        BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
+
+        boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+    	assertFalse(isPresent,"Hash does not manage to find entry because fields had been change and hash does not match anymore");
+    	isPresentPrint(isPresent);
+    }
+    
+    
+    @Test
     public void testWithBeanWithSameHashValue() {
-        System.out.println("testWithBeanWithSameHashValue");
+    	System.out.println("testWithBeanWithSameHashValue");
         System.out.println("Should be slow because hashcode method return always the same value and the repartition is bad");
 
         Map<BeanWithSameHashValue, String> hashTable = new Hashtable<>();
-        BeanWithSameHashValue bean;
-        Date now = new Date();
-
-        long debut = System.nanoTime();
-        for (int i = 0; i < iteration; i++) {
-            bean = new BeanWithSameHashValue(i, true, "aName" + i, now, owner);
-            hashTable.put(bean, bean.toString());
-        }
-        long fin = System.nanoTime();
-        System.out.println("HashTable temps d'insertion  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(fin - debut)) + " ms");
-
-
-        debut = System.nanoTime();
-        bean = new BeanWithSameHashValue(3504, true, "aName3504", now, owner);
-        if (hashTable.containsKey(bean)) {
-            hashTable.get(bean);
-        }
-        fin = System.nanoTime();
-        System.out.println("HashTable temps de recherche = " + Math.abs(fin - debut) + " nano secondes");
+        BeanWithSameHashValue bean = new BeanWithSameHashValue(154064, true, "aName53144", new Date(), owner);
+        
+        boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+    	assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
+    	isPresentPrint(isPresent);
     }
 
 
     @Test
     public void testBeanWithHashImmutable() {
-        System.out.println("testBeanWithHashImmutable");
+    	System.out.println("testBeanWithHashImmutable");
         Map<BeanWithHashImmutable, String> hashTable = new Hashtable<>();
-        BeanWithHashImmutable bean;
-        long debut = System.nanoTime();
-        Date now = new Date();
-        for (int i = 0; i < iteration; i++) {
-            bean = new BeanWithHashImmutable(i, true, "aName" + i, now, owner);
-            hashTable.put(bean, bean.toString());
-        }
-        long fin = System.nanoTime();
-        System.out.println("HashTable temps d'insertion  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(fin - debut)) + " ms");
-
-
-        debut = System.nanoTime();
-        bean = new BeanWithHashImmutable(3504, true, "aName3504", now, owner);
-        String res = null;
-        if (hashTable.containsKey(bean)) {
-            res = hashTable.get(bean);
-        }
-        fin = System.nanoTime();
-        System.out.println("HashTable temps de recherche = " + Math.abs(fin - debut) + " nano secondes");
-
-        System.out.println(Objects.nonNull(res) ? "I find the result" : "I do not find the result");
+        BeanWithHashImmutable bean= new BeanWithHashImmutable(154064, true, "aName53144", new Date(), owner);
+        boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+    	assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
+    	isPresentPrint(isPresent);
     }
 
-    @Test
-    public void changeValueForBeanWithHash() {
-        System.out.println("changeValueForBeanWithHash");
 
-        Map<BeanWithHash, String> hashTable = new Hashtable<>();
-        BeanWithHash mutableKey = new BeanWithHash(225546, true, "plouf", new Date(), owner);
-        BeanWithHash bean;
-
-        long debut = System.nanoTime();
-        for (int i = 0; i < iteration; i++) {
-            if (i == 2365) {
-                bean = mutableKey;
-            } else {
-                bean = new BeanWithHash(i, true, "aName" + i, new Date(), owner);
-            }
-            hashTable.put(bean, bean.toString());
-        }
-        long fin = System.nanoTime();
-        System.out.println("HashTable temps d'insertion  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(fin - debut)) + " ms");
-
-        debut = System.nanoTime();
-        if (hashTable.containsKey(mutableKey)) {
-            hashTable.get(mutableKey);
-        }
-        fin = System.nanoTime();
-        System.out.println("HashTable temps de recherche = " + Math.abs(fin - debut) + " nano secondes");
-
-        //BEGIN MUTATION
-        mutableKey.setCreation(new Date());
-        mutableKey.setOwner(new ArrayList<>());
-        mutableKey.setPrice(-542671);
-        mutableKey.setName("MUTATION");
-        String res = null;
-        debut = System.nanoTime();
-        if (hashTable.containsKey(mutableKey)) {
-            res = hashTable.get(mutableKey);
-        }
-        fin = System.nanoTime();
-        System.out.println("HashTable temps de recherche une fois mutée = " + Math.abs(fin - debut) + " nano secondes");
-
-        System.out.println(Objects.nonNull(res) ? "Find the result" : "Does not find the result");
-    }
 
     @Test
-    public void shouldBeQuickerWithPersonalizeHashThanClassicImpl() {
-        System.out.println("shouldBeQuickerWithPersonalizeHashThanClassicImpl");
+    public void beCarefullWhenYouReimplementHashCodeMethod() {
+    	System.out.println("beCarefullWhenYouReimplementHashCodeMethod");
+    	 Map<BeanWithHash, String> hashTable = new Hashtable<>();
+         BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
-        Map<BeanWithHash, String> hashTable = new Hashtable<>();
-        BeanWithHash bean;
-        long debut;
-        Date now = new Date();
-        for (int i = 0; i < iteration; i++) {
-            bean = new BeanWithHash(i, true, "aName" + i, now, owner);
-            hashTable.put(bean, bean.toString());
-        }
+         boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+     	assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
+     	isPresentPrint(isPresent);
+     	
+     	Map<BeanWithPersonalizedHash, String> dangerousHashTable = new Hashtable<>();
+     	BeanWithPersonalizedHash anOtherbean = new BeanWithPersonalizedHash(154064, true, "aName53144", new Date(), owner);
 
-        bean = new BeanWithHash(3504, true, "aName3504", now, owner);
-        debut = System.nanoTime();
-        if (hashTable.containsKey(bean)) {
-            hashTable.get(bean);
-        }
-        long fin = System.nanoTime();
-        System.out.println("HashTable temps de recherche pour BeanWithHash  = " + Math.abs(fin - debut) + " ms");
-        hashTable.clear();
-        ////////////////////////
-
-        BeanWithPersonalizedHashImmutable bean2;
-        Map<BeanWithPersonalizedHashImmutable, String> hashTable2 = new Hashtable<>();
-        for (int i = 0; i < iteration; i++) {
-            bean2 = new BeanWithPersonalizedHashImmutable(i, true, "aName" + i, now, owner);
-            hashTable2.put(bean2, bean2.toString());
-        }
-
-        bean2 = new BeanWithPersonalizedHashImmutable(3504, true, "aName3504", now, owner);
-        debut = System.nanoTime();
-        if (hashTable2.containsKey(bean2)) {
-            hashTable2.get(bean2);
-        }
-        fin = System.nanoTime();
-
-        System.out.println("HashTable temps de recherche pour BeanWithPersonalizedHashImmutable  = " + Math.abs(fin - debut) + " ms");
+        boolean isPresent2 = executeTest(dangerousHashTable,anOtherbean, iteration,insertionRank,false);
+    	assertTrue(isPresent2,"Hash manage to find entry because hash method is defined");
+    	isPresentPrint(isPresent2);
     }
 
 
     @Test
     public void testCachingHashCode() {
-        System.out.println("testCachingHashCode");
-
-        Map<BeanWithCachingHashCode, String> hashTable = new Hashtable<>();
-        BeanWithCachingHashCode bean;
-        long debut = System.nanoTime();
-        Date now = new Date();
-
-        for (int i = 0; i < iteration; i++) {
-            bean = new BeanWithCachingHashCode(i, true, "aName" + i, now, owner);
-            hashTable.put(bean, bean.toString());
-        }
-        long fin = System.nanoTime();
-        System.out.println("HashTable temps d'insertion  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(fin - debut)) + " ms");
-
-
-        String res = null;
-        BeanWithCachingHashCode beanToSearch = new BeanWithCachingHashCode(3526, true, "aName3526", now, owner);
-        debut = System.nanoTime();
-        if (hashTable.containsKey(beanToSearch)) {
-            res = hashTable.get(beanToSearch);
-        }
-        fin = System.nanoTime();
-        System.out.println("HashTable temps de recherche = " + Math.abs(fin - debut) + " nano secondes");
-
-        System.out.println(Objects.nonNull(res) ? "I find the result" : "I do not find the result");
+    	System.out.println("testCachingHashCode");
+        Map<BeanImmutableWithCachingHashCode, String> hashTable = new Hashtable<>();
+        BeanImmutableWithCachingHashCode bean = new BeanImmutableWithCachingHashCode(154064, true, "aName53144", new Date(), owner);
+        boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
+        assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
+        isPresentPrint(isPresent);
+    }
+    
+    private void isPresentPrint(boolean isPresent) {
+    	System.out.println((isPresent)?"Value is found":"Value not found");
     }
 
 

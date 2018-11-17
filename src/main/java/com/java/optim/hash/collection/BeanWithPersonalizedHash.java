@@ -4,16 +4,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public final class BeanWithPersonalizedHashImmutable {
+public final class BeanWithPersonalizedHash extends RootBean{
 
-	private final int price;
-	private final boolean available;
-	private final String name;
-	private final Date creation;
-	private final List<String> owner;
 	
-
-	public BeanWithPersonalizedHashImmutable(int price, boolean available, String name, Date creation,
+	public BeanWithPersonalizedHash(int price, boolean available, String name, Date creation,
 			List<String> owner) {
 		super();
 		this.price = price;
@@ -48,13 +42,12 @@ public final class BeanWithPersonalizedHashImmutable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (available ? 1231 : 1237);
-		result = prime * result + ((creation == null) ? 0 : creation.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-		result = prime * result + price; // <==== here
+		int result = 0;
+		result = result + (available ? 22 : 44);
+		result = result + ((creation == null) ? 0 : creation.hashCode());
+		result = result + ((name == null) ? 0 : name.hashCode());
+		result = result + ((owner == null) ? 0 : owner.hashCode());
+		result = result + price; 
 		return result;
 	}
 
@@ -66,7 +59,7 @@ public final class BeanWithPersonalizedHashImmutable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BeanWithPersonalizedHashImmutable other = (BeanWithPersonalizedHashImmutable) obj;
+		BeanWithPersonalizedHash other = (BeanWithPersonalizedHash) obj;
 		if (available != other.available)
 			return false;
 		if (creation == null) {

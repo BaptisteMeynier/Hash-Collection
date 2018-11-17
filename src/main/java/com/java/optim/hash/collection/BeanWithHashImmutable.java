@@ -4,13 +4,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public final class BeanWithHashImmutable {
+public final class BeanWithHashImmutable extends RootBean{
 
-	private final int price;
-	private final boolean available;
-	private final String name;
-	private final Date creation;
-	private final List<String> owner;
 	
 	public BeanWithHashImmutable(int price, boolean available, String name, Date creation, List<String> owner) {
 		super();

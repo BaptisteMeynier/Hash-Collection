@@ -3,14 +3,8 @@ package com.java.optim.hash.collection;
 import java.util.Date;
 import java.util.List;
 
-public class BeanWithSameHashValue{
+public class BeanWithSameHashValue extends RootBean{
 
-
-	private int price;
-	private boolean available;
-	private String name;
-	private Date creation;
-	private List<String> owner;
 
 	public BeanWithSameHashValue() {}
 
