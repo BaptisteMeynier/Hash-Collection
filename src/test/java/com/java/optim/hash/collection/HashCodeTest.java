@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.java.optim.hash.collection.*;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +23,7 @@ import org.junit.jupiter.api.Test;
 
 public class HashCodeTest {
 
-    private int iteration = 500000;
+    private int iteration = 1000000;
  	private int insertionRank= 235645;
     
     private List<String> owner = Arrays.asList("Martin", "Paul");
@@ -30,6 +31,12 @@ public class HashCodeTest {
     @BeforeEach
     public void separation() {
     	System.out.println("______________________________________");
+    }
+    
+   // @BeforeAll
+    public void initialPrint() {
+    	System.out.println("Iteration number:"+iteration);
+        System.out.println("Insertion rank" + insertionRank);
     }
     
     public <T extends RootBean> boolean executeTest(final Map<T,String> hashMap, T keyToFind, int totalIteration, int insertionRank, boolean mutationActivated) {
@@ -91,8 +98,8 @@ public class HashCodeTest {
     
 
     @Test
-    public void testWithBeanWithHash() {
-      System.out.println("testWithBeanWithHash");
+    public void testBeanWithHash() {
+      System.out.println("testBeanWithHash");
         Map<BeanWithHash, String> hashTable = new Hashtable<>();
         BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
@@ -102,8 +109,8 @@ public class HashCodeTest {
     }
 
     @Test
-    public void testWithEclipseHashCodeImpl() {
-      System.out.println("testWithEclipseHashCodeImpl");
+    public void testEclipseHashCodeImpl() {
+      System.out.println("testEclipseHashCodeImpl");
         Map<BeanWithEclipseHash, String> hashTable = new Hashtable<>();
         BeanWithEclipseHash bean = new BeanWithEclipseHash(154064, true, "aName53144", new Date(), owner);
 
@@ -113,8 +120,8 @@ public class HashCodeTest {
     }
     
     @Test
-    public void testWithIntelliJHashCodeImpl() {
-      System.out.println("testWithIntelliJHashCodeImpl");
+    public void testIntelliJHashCodeImpl() {
+      System.out.println("testIntelliJHashCodeImpl");
         Map<BeanWithIntelliJHash, String> hashTable = new Hashtable<>();
         BeanWithIntelliJHash bean = new BeanWithIntelliJHash(154064, true, "aName53144", new Date(), owner);
 
@@ -124,8 +131,8 @@ public class HashCodeTest {
     }
     
     @Test
-    public void testWithJava8HashCodeImpl() {
-      System.out.println("testWithJava8HashCodeImpl");
+    public void testJava8HashCodeImpl() {
+      System.out.println("testJava8HashCodeImpl");
         Map<BeanWithJava8Hash, String> hashTable = new Hashtable<>();
         BeanWithJava8Hash bean = new BeanWithJava8Hash(154064, true, "aName53144", new Date(), owner);
 
@@ -147,8 +154,8 @@ public class HashCodeTest {
     
     
     @Test
-    public void testWithBeanWithSameHashValue() {
-    	System.out.println("testWithBeanWithSameHashValue");
+    public void testBeanWithSameHashValue() {
+    	System.out.println("testBeanWithSameHashValue");
         System.out.println("Should be slow because hashcode method return always the same value and the repartition is bad");
 
         Map<BeanWithSameHashValue, String> hashTable = new Hashtable<>();
@@ -194,8 +201,8 @@ public class HashCodeTest {
 
 
     @Test
-    public void testCachingHashCode() {
-    	System.out.println("testCachingHashCode");
+    public void testImmutableCachingHashCode() {
+    	System.out.println("testImmutableCachingHashCode");
         Map<BeanImmutableWithCachingHashCode, String> hashTable = new Hashtable<>();
         BeanImmutableWithCachingHashCode bean = new BeanImmutableWithCachingHashCode(154064, true, "aName53144", new Date(), owner);
         boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false);
