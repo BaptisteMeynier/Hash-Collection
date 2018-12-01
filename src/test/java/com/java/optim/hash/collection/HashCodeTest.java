@@ -39,21 +39,36 @@ public class HashCodeTest {
 		System.out.println("Insertion rank" + insertionRank);
 	}
 
+	
+	@Test
+	public void equality() {
+		BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
+		BeanWithHash bean2 = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
+		assertTrue(bean.equals(bean2));
+	}
+	
+	@Test
+	public void equality2() {
+		BeanWithSameHashValue bean = new BeanWithSameHashValue(154064, true, "aName53144", new Date(), owner);
+		BeanWithSameHashValue bean2 = new BeanWithSameHashValue(154064, true, "aName53144", new Date(), owner);
+		assertTrue(bean.equals(bean2));
+	}
+	
 	public <T extends RootBean> boolean executeTest(
 			final Map<T,String> hashMap, 
-			T keyToFind, 
+			T keyInsert, 
 			int totalIteration, 
 			int insertionRank, 
-			boolean cloneBean,
+			T specificKeyToSearch,
 			boolean mutationActivated) {
 
 		long begin = System.nanoTime();
 		T bean;
 		for (int i = 0; i < totalIteration; i++) {
 			if (i == insertionRank) {
-				bean = keyToFind;
+				bean = keyInsert;
 			} else {
-				bean = (T)keyToFind.clone();
+				bean = (T)keyInsert.clone();
 				bean.setPrice(i);
 				bean.setName("aName"+i);
 			}
@@ -63,19 +78,19 @@ public class HashCodeTest {
 		System.out.println("HashTable insertion duration  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(end - begin)) + " ms");
 
 		if(mutationActivated) {
-			keyToFind.setCreation(new Date());
-			keyToFind.setName("anOtherName");
-			keyToFind.setPrice(-459);
+			keyInsert.setCreation(new Date());
+			keyInsert.setName("anOtherName");
+			keyInsert.setPrice(-459);
 		}
 
 		//SEARCH
 		begin = System.nanoTime();
-		if(cloneBean) {
-			keyToFind = (T)keyToFind.clone();
+		if(Objects.nonNull(specificKeyToSearch)) {
+			keyInsert = specificKeyToSearch;
 		}
-		boolean isPresent = hashMap.containsKey(keyToFind);
+		boolean isPresent = hashMap.containsKey(keyInsert);
 		if(isPresent) {
-			hashMap.get(keyToFind);
+			hashMap.get(keyInsert);
 		}
 		end = System.nanoTime();
 		System.out.println("HashTable seek duration  = " + Math.abs(end - begin) + " ns");
@@ -88,7 +103,7 @@ public class HashCodeTest {
 		Map<BeanWithoutHash, String> hashTable = new Hashtable<>();
 		BeanWithoutHash bean = new BeanWithoutHash(154064, true, "aName53144", new Date(), owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false,false);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
 		assertTrue(isPresent,"Hash manage to find entry because Object Reference is found");
 		isPresentPrint(isPresent);
 	}
@@ -98,9 +113,11 @@ public class HashCodeTest {
 		System.out.println("searchCloneBeanForBeanWithoutHash");
 		Map<BeanWithoutHash, String> hashTable = new Hashtable<>();
 		int rank =iteration/2;
-		BeanWithoutHash bean = new BeanWithoutHash(rank, true, "aName"+rank, new Date(), owner);
+		Date date= new Date();
+		BeanWithoutHash elementInsert = new BeanWithoutHash(rank, true, "aName"+rank, date, owner);
+		BeanWithoutHash elementSearch = new BeanWithoutHash(rank, true, "aName"+rank, date, owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,-1,true,false);
+		boolean isPresent = executeTest(hashTable,elementInsert, iteration,-1,elementSearch,false);
 		assertFalse(isPresent,"Hash does not manage to find entry because Object Reference is different");
 		isPresentPrint(isPresent);
 	}
@@ -112,7 +129,7 @@ public class HashCodeTest {
 		Map<BeanWithHash, String> hashTable = new Hashtable<>();
 		BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false,false);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
 		assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent);
 	}
@@ -121,9 +138,11 @@ public class HashCodeTest {
 	public void searchCloneBeanWithHash() {
 		System.out.println("searchCloneBeanWithHash");
 		Map<BeanWithHash, String> hashTable = new Hashtable<>();
-		BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
+		Date date = new Date();
+		BeanWithHash insertedElement = new BeanWithHash(154064, true, "aName53144", date, owner);
+		BeanWithHash copy = new BeanWithHash(154064, true, "aName53144", date, owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,true,false);
+		boolean isPresent = executeTest(hashTable,insertedElement, iteration,insertionRank,copy,false);
 		assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent);
 	}
@@ -134,7 +153,7 @@ public class HashCodeTest {
 		Map<BeanWithEclipseHash, String> hashTable = new Hashtable<>();
 		BeanWithEclipseHash bean = new BeanWithEclipseHash(154064, true, "aName53144", new Date(), owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false,false);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
 		assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent);
 	}
@@ -145,7 +164,7 @@ public class HashCodeTest {
 		Map<BeanWithIntelliJHash, String> hashTable = new Hashtable<>();
 		BeanWithIntelliJHash bean = new BeanWithIntelliJHash(154064, true, "aName53144", new Date(), owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false,false);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
 		assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent);
 	}
@@ -156,7 +175,7 @@ public class HashCodeTest {
 		Map<BeanWithJava8Hash, String> hashTable = new Hashtable<>();
 		BeanWithJava8Hash bean = new BeanWithJava8Hash(154064, true, "aName53144", new Date(), owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false,false);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
 		assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent);
 	}
@@ -167,7 +186,7 @@ public class HashCodeTest {
 		Map<BeanWithHash, String> hashTable = new Hashtable<>();
 		BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false,true);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,true);
 		assertFalse(isPresent,"Hash does not manage to find entry because fields had been change and hash does not match anymore");
 		isPresentPrint(isPresent);
 	}
@@ -181,7 +200,7 @@ public class HashCodeTest {
 		Map<BeanWithSameHashValue, String> hashTable = new Hashtable<>();
 		BeanWithSameHashValue bean = new BeanWithSameHashValue(154064, true, "aName53144", new Date(), owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false,false);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
 		assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent);
 	}
@@ -192,10 +211,12 @@ public class HashCodeTest {
 		System.out.println("Should be slow and not find the key");
 
 		Map<BeanWithSameHashValue, String> hashTable = new Hashtable<>();
-		BeanWithSameHashValue bean = new BeanWithSameHashValue(154064, true, "aName53144", new Date(), owner);
+		Date date = new Date();
+		BeanWithSameHashValue bean = new BeanWithSameHashValue(154064, true, "aName53144", date, owner);
+		BeanWithSameHashValue copy = new BeanWithSameHashValue(154064, true, "aName53144", date, owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,true,false);
-		assertFalse(isPresent);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,copy,false);
+		assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent);
 	}
 
@@ -204,7 +225,7 @@ public class HashCodeTest {
 		System.out.println("testBeanWithHashImmutable");
 		Map<BeanWithHashImmutable, String> hashTable = new Hashtable<>();
 		BeanWithHashImmutable bean= new BeanWithHashImmutable(154064, true, "aName53144", new Date(), owner);
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false,false);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
 		assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent);
 	}
@@ -218,7 +239,7 @@ public class HashCodeTest {
 		Map<BeanWithHash, String> hashTable = new Hashtable<>();
 		BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false,false);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
 		assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent);
 
@@ -226,7 +247,7 @@ public class HashCodeTest {
 		Map<BeanWithPersonalizedHash, String> dangerousHashTable = new Hashtable<>();
 		BeanWithPersonalizedHash anOtherbean = new BeanWithPersonalizedHash(154064, true, "aName53144", new Date(), owner);
 
-		boolean isPresent2 = executeTest(dangerousHashTable,anOtherbean, iteration,insertionRank,false,false);
+		boolean isPresent2 = executeTest(dangerousHashTable,anOtherbean, iteration,insertionRank,null,false);
 		assertTrue(isPresent2,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent2);
 	}
@@ -237,7 +258,7 @@ public class HashCodeTest {
 		System.out.println("testImmutableCachingHashCode");
 		Map<BeanImmutableWithCachingHashCode, String> hashTable = new Hashtable<>();
 		BeanImmutableWithCachingHashCode bean = new BeanImmutableWithCachingHashCode(154064, true, "aName53144", new Date(), owner);
-		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,false,false);
+		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
 		assertTrue(isPresent,"Hash manage to find entry because hash method is defined");
 		isPresentPrint(isPresent);
 	}

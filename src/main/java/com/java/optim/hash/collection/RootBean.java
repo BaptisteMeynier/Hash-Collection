@@ -44,10 +44,19 @@ public class RootBean implements Cloneable {
 	protected void setOwner(List<String> owner) {
 		this.owner = owner;
 	}
+	
+	protected boolean isAvailable() {
+		return available;
+	}
+
+	protected void setAvailable(boolean available) {
+		this.available = available;
+	}
 
 	public RootBean clone() {
 		RootBean copy = new RootBean();
 		copy.setPrice(this.price);
+		copy.setAvailable(this.available);
 		copy.setName(this.name);
 		copy.setCreation(new Date(this.creation.getTime()));
 		copy.setOwner(new ArrayList(this.owner));
