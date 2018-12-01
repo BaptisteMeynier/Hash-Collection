@@ -35,25 +35,25 @@ public class HashCodeTest {
 
 	// @BeforeAll
 	public void initialPrint() {
-		System.out.println("Iteration number:"+iteration);
-		System.out.println("Insertion rank" + insertionRank);
+		System.out.println("Iteration number:"+iteration + "  ");
+		System.out.println("Insertion rank" + insertionRank + "  ");
 	}
 
-	
+
 	@Test
 	public void equality() {
 		BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 		BeanWithHash bean2 = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 		assertTrue(bean.equals(bean2));
 	}
-	
+
 	@Test
 	public void equality2() {
 		BeanWithSameHashValue bean = new BeanWithSameHashValue(154064, true, "aName53144", new Date(), owner);
 		BeanWithSameHashValue bean2 = new BeanWithSameHashValue(154064, true, "aName53144", new Date(), owner);
 		assertTrue(bean.equals(bean2));
 	}
-	
+
 	public <T extends RootBean> boolean executeTest(
 			final Map<T,String> hashMap, 
 			T keyInsert, 
@@ -75,7 +75,7 @@ public class HashCodeTest {
 			hashMap.put(bean, bean.toString());
 		}
 		long end = System.nanoTime();
-		System.out.println("HashTable insertion duration  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(end - begin)) + " ms");
+		System.out.println("HashTable insertion duration  = " + TimeUnit.NANOSECONDS.toMillis(Math.abs(end - begin)) + " ms  ");
 
 		if(mutationActivated) {
 			keyInsert.setCreation(new Date());
@@ -93,24 +93,24 @@ public class HashCodeTest {
 			hashMap.get(keyInsert);
 		}
 		end = System.nanoTime();
-		System.out.println("HashTable seek duration  = " + Math.abs(end - begin) + " ns");
+		System.out.println("HashTable seek duration  = " + Math.abs(end - begin) + " ns  ");
 		return isPresent;
 	}
 
 	@Test
 	public void searchByReferenceForBeanWithoutHash() {
-		System.out.println("searchByReferenceForBeanWithoutHash");
+		System.out.println("searchByReferenceForBeanWithoutHash  ");
 		Map<BeanWithoutHash, String> hashTable = new Hashtable<>();
 		BeanWithoutHash bean = new BeanWithoutHash(154064, true, "aName53144", new Date(), owner);
 
 		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
-		assertTrue(isPresent,"Hash manage to find entry because Object Reference is found");
+		assertTrue(isPresent,"Hash manage to find entry because Object Reference is found  ");
 		isPresentPrint(isPresent);
 	}
 
 	@Test
 	public void searchCloneBeanForBeanWithoutHash() {
-		System.out.println("searchCloneBeanForBeanWithoutHash");
+		System.out.println("searchCloneBeanForBeanWithoutHash  ");
 		Map<BeanWithoutHash, String> hashTable = new Hashtable<>();
 		int rank =iteration/2;
 		Date date= new Date();
@@ -125,7 +125,7 @@ public class HashCodeTest {
 
 	@Test
 	public void searchBeanReferenceWithHash() {
-		System.out.println("searchBeanReferenceWithHash");
+		System.out.println("searchBeanReferenceWithHash  ");
 		Map<BeanWithHash, String> hashTable = new Hashtable<>();
 		BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
@@ -136,7 +136,7 @@ public class HashCodeTest {
 
 	@Test
 	public void searchCloneBeanWithHash() {
-		System.out.println("searchCloneBeanWithHash");
+		System.out.println("searchCloneBeanWithHash  ");
 		Map<BeanWithHash, String> hashTable = new Hashtable<>();
 		Date date = new Date();
 		BeanWithHash insertedElement = new BeanWithHash(154064, true, "aName53144", date, owner);
@@ -149,7 +149,7 @@ public class HashCodeTest {
 
 	@Test
 	public void testEclipseHashCodeImpl() {
-		System.out.println("testEclipseHashCodeImpl");
+		System.out.println("testEclipseHashCodeImpl  ");
 		Map<BeanWithEclipseHash, String> hashTable = new Hashtable<>();
 		BeanWithEclipseHash bean = new BeanWithEclipseHash(154064, true, "aName53144", new Date(), owner);
 
@@ -160,7 +160,7 @@ public class HashCodeTest {
 
 	@Test
 	public void testIntelliJHashCodeImpl() {
-		System.out.println("testIntelliJHashCodeImpl");
+		System.out.println("testIntelliJHashCodeImpl  ");
 		Map<BeanWithIntelliJHash, String> hashTable = new Hashtable<>();
 		BeanWithIntelliJHash bean = new BeanWithIntelliJHash(154064, true, "aName53144", new Date(), owner);
 
@@ -171,7 +171,7 @@ public class HashCodeTest {
 
 	@Test
 	public void testJava8HashCodeImpl() {
-		System.out.println("testJava8HashCodeImpl");
+		System.out.println("testJava8HashCodeImpl  ");
 		Map<BeanWithJava8Hash, String> hashTable = new Hashtable<>();
 		BeanWithJava8Hash bean = new BeanWithJava8Hash(154064, true, "aName53144", new Date(), owner);
 
@@ -182,7 +182,7 @@ public class HashCodeTest {
 
 	@Test
 	public void changeValueForBeanWithHash() {
-		System.out.println("changeValueForBeanWithHash");
+		System.out.println("changeValueForBeanWithHash  ");
 		Map<BeanWithHash, String> hashTable = new Hashtable<>();
 		BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
@@ -194,8 +194,8 @@ public class HashCodeTest {
 
 	@Test
 	public void testBeanWithSameHashValue() {
-		System.out.println("testBeanWithSameHashValue");
-		System.out.println("Should be slow because hashcode method return always the same value and the repartition is bad");
+		System.out.println("testBeanWithSameHashValue  ");
+		System.out.println("Should be slow because hashcode method return always the same value and the repartition is bad  ");
 
 		Map<BeanWithSameHashValue, String> hashTable = new Hashtable<>();
 		BeanWithSameHashValue bean = new BeanWithSameHashValue(154064, true, "aName53144", new Date(), owner);
@@ -207,8 +207,8 @@ public class HashCodeTest {
 
 	@Test
 	public void testCloneBeanWithSameHashValue() {
-		System.out.println("testCloneBeanWithSameHashValue");
-		System.out.println("Should be slow and not find the key");
+		System.out.println("testCloneBeanWithSameHashValue  ");
+		System.out.println("Should be slow and not find the key  ");
 
 		Map<BeanWithSameHashValue, String> hashTable = new Hashtable<>();
 		Date date = new Date();
@@ -222,7 +222,7 @@ public class HashCodeTest {
 
 	@Test
 	public void testBeanWithHashImmutable() {
-		System.out.println("testBeanWithHashImmutable");
+		System.out.println("testBeanWithHashImmutable  ");
 		Map<BeanWithHashImmutable, String> hashTable = new Hashtable<>();
 		BeanWithHashImmutable bean= new BeanWithHashImmutable(154064, true, "aName53144", new Date(), owner);
 		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
@@ -234,8 +234,8 @@ public class HashCodeTest {
 
 	@Test
 	public void beCarefullWhenYouReimplementHashCodeMethod() {
-		System.out.println("beCarefullWhenYouReimplementHashCodeMethod");
-		System.out.println("Classical Implement with prime number");
+		System.out.println("beCarefullWhenYouReimplementHashCodeMethod  ");
+		System.out.println("Classical Implement with prime number  ");
 		Map<BeanWithHash, String> hashTable = new Hashtable<>();
 		BeanWithHash bean = new BeanWithHash(154064, true, "aName53144", new Date(), owner);
 
@@ -255,7 +255,7 @@ public class HashCodeTest {
 
 	@Test
 	public void testImmutableCachingHashCode() {
-		System.out.println("testImmutableCachingHashCode");
+		System.out.println("testImmutableCachingHashCode  ");
 		Map<BeanImmutableWithCachingHashCode, String> hashTable = new Hashtable<>();
 		BeanImmutableWithCachingHashCode bean = new BeanImmutableWithCachingHashCode(154064, true, "aName53144", new Date(), owner);
 		boolean isPresent = executeTest(hashTable,bean, iteration,insertionRank,null,false);
@@ -264,7 +264,7 @@ public class HashCodeTest {
 	}
 
 	private void isPresentPrint(boolean isPresent) {
-		System.out.println((isPresent)?"Value is found":"Value not found");
+		System.out.println((isPresent)?"Value is found":"Value not found"+ "  ");
 	}
 
 
