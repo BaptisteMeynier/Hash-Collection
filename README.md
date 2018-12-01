@@ -77,3 +77,66 @@ HashTable seek duration  = 1718 ns
 Value not found  
 
 
+______________________________________
+testEclipseHashCodeImpl
+HashTable insertion duration  = 7010 ms
+HashTable seek duration  = 32042 ns
+Value is found
+______________________________________
+testBeanWithSameHashValue
+Should be slow because hashcode method return always the same value and the repartition is bad
+HashTable insertion duration  = 6707 ms
+HashTable seek duration  = 19756 ns
+Value is found
+______________________________________
+searchReferenceForBeanWithoutHash
+HashTable insertion duration  = 7125 ms
+HashTable seek duration  = 16853 ns
+Value is found
+______________________________________
+beCarefullWhenYouReimplementHashCodeMethod
+Classical Implement with prime number
+HashTable insertion duration  = 5164 ms
+HashTable seek duration  = 23794 ns
+Value is found
+Personalize Implement
+HashTable insertion duration  = 8713 ms
+HashTable seek duration  = 23195 ns
+Value is found
+______________________________________
+testJava8HashCodeImpl
+HashTable insertion duration  = 5442 ms
+HashTable seek duration  = 15290 ns
+Value is found
+______________________________________
+changeValueForBeanWithHash
+HashTable insertion duration  = 5459 ms
+HashTable seek duration  = 14178 ns
+Value not found
+______________________________________
+testIntelliJHashCodeImpl
+HashTable insertion duration  = 5773 ms
+HashTable seek duration  = 22406 ns
+Value is found
+______________________________________
+testBeanWithHash
+HashTable insertion duration  = 6229 ms
+HashTable seek duration  = 20348 ns
+Value is found
+______________________________________
+testBeanWithHashImmutable
+HashTable insertion duration  = 5391 ms
+HashTable seek duration  = 23450 ns
+Value is found
+______________________________________
+testImmutableCachingHashCode
+HashTable insertion duration  = 6169 ms
+HashTable seek duration  = 3278 ns
+Value is found
+______________________________________
+searchBeanWithDifferentReferenceForBeanWithoutHash
+HashTable insertion duration  = 3287 ms
+HashTable seek duration  = 1633 ns
+Value not found
+
+

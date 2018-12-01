@@ -43,9 +43,9 @@ public final class BeanWithPersonalizedHash extends RootBean{
 	@Override
 	public int hashCode() {
 		int result = 0;
-		result = result + (available ? 22 : 44);
+		result = result * (available ? 212 : 44);
 		result = result + ((creation == null) ? 0 : creation.hashCode());
-		result = result + ((name == null) ? 0 : name.hashCode());
+		result = result - ((name == null) ? 0 : name.hashCode());
 		result = result + ((owner == null) ? 0 : owner.hashCode());
 		result = result + price; 
 		return result;
